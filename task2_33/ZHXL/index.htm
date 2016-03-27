@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>听指令的小方块（一）</title>
+	<style type="text/css">
+	    *{padding:0;margin: 0;}
+	    .clearfix:before,.clearfix:after{content: ".";height: 0;font-size: 0;display: block;clear: both;}
+	    ul{list-style: none;}
+	    .box{
+	    	margin: 40px;
+	    }
+	    .row{
+	    	margin-left: 20px;
+	    	margin-bottom: 6px;
+	    	text-align: center;
+	    }
+	    .row li{
+	    	float: left;
+	    	width: 42px;
+	    }
+	    .col{
+	    	float: left;
+	    	text-align: center;
+	    }
+	    .col li{
+	    	line-height: 42px;
+	    }
+	    #content-box{
+	    	position: relative;
+	    	width: 420px;
+	    	height: 420px;
+	    	margin-left: 20px;
+	    	border: 1px solid #000;
+	    }
+	    .cell{
+	    	position: absolute;
+	    	width: 40px;
+	    	height: 40px;
+	    	border: 1px solid #ccc;
+	    	z-index: 9999;
+	    }
+	    #red-block{
+	    	position: absolute;
+	    	left: 50%;
+	    	top:50%;
+	    	z-index: 100000;
+	    	width: 42px;
+	    	height: 42px;
+	    }
+	    .blue{
+	    	height: 10px;
+	    	background-color: blue;
+	    }
+	    .red{
+	    	height: 32px;
+	    	background-color: red;
+	    }
+	    .active{
+	    	margin-top: 40px;
+	    }
+	    input{
+	        border:none;
+	        outline: none;
+	        height: 20px;
+	        border: 1px solid #ccc;
+	    	border-radius: 4px;
+	    }
+	    button{
+	    	padding: 4px 10px;
+	    	border-radius: 4px;
+	    }
+	</style>
+</head>
+<body>
+	<div class="box">
+	    <ul class="row clearfix">
+	    	<li>1</li>
+	    	<li>2</li>
+	    	<li>3</li>
+	    	<li>4</li>
+	    	<li>5</li>
+	    	<li>6</li>
+	    	<li>7</li>
+	    	<li>8</li>
+	    	<li>9</li>
+	    	<li>10</li>
+	    </ul>
+	    <ul class="col">
+	    	<li>1</li>
+	    	<li>2</li>
+	    	<li>3</li>
+	    	<li>4</li>
+	    	<li>5</li>
+	    	<li>6</li>
+	    	<li>7</li>
+	    	<li>8</li>
+	    	<li>9</li>
+	    	<li>10</li>
+	    </ul>
+	    <div id="content-box"> 
+	    </div>
+        <div class="active">
+		    <input type="text" value="GO" id="order">
+		    <button id="do">执行</button>
+	    </div>
+	</div>
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		var box=document.getElementById("content-box");
+		var btn=document.getElementById("do");
+
+		var angle=0;
+
+		btn.onclick=function(){
+			var value=document.getElementById("order").value;
+			var red_clock=document.getElementById("red-block");
+			if(angle==0){
+					if(value=="GO"){
+	                 go(angle);
+				}
+				if(value=="TUN LEF"){
+					angle=angle-90;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN RIG"){
+					angle=angle+90;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN BAC"){
+					angle=angle+180;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+			}
+			else if(angle==90){
+					if(value=="GO"){
+	                 go(angle);
+				}
+				if(value=="TUN LEF"){
+					angle=angle-90;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN RIG"){
+					angle=angle+90;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN BAC"){
+					angle=angle-180;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+			}
+			else if(angle==-90){
+					if(value=="GO"){
+	                 go(angle);
+				}
+				if(value=="TUN LEF"){
+					angle=angle+270;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN RIG"){
+					angle=angle+90;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN BAC"){
+					angle=angle+180;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+			}
+			else if(angle==180){
+					if(value=="GO"){
+	                 go(angle);
+				}
+				if(value=="TUN LEF"){
+					angle=angle-90;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN RIG"){
+					angle=angle-270;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+				if(value=="TUN BAC"){
+					angle=angle-180;
+					red_clock.style.transform='rotate('+angle+'deg)';
+				}
+			}
+			
+		}
+        
+        init(box);
+   
+
+	}
+
+	// 获取css的属性值
+	function getStyle(obj,attr){
+		    var ie = !+"\v1";//简单判断ie6~8
+		 if(attr=="backgroundPosition"){//IE6~8不兼容backgroundPosition写法，识别backgroundPositionX/Y
+		  if(ie){        
+		   return obj.currentStyle.backgroundPositionX +" "+obj.currentStyle.backgroundPositionY;
+		     }
+		 }
+		 if(obj.currentStyle){
+		  return obj.currentStyle[attr];
+		 }
+		 else{
+		  return document.defaultView.getComputedStyle(obj,null)[attr];
+		 }
+    }
+
+	// 移动函数
+	function go(angle){
+		var red_clock=document.getElementById("red-block");
+    
+        // 向上移动
+		if(angle==0){
+			var top_point=getStyle(red_clock,"top");
+	        var top_len=top_point.length;
+	        var top_point_value=parseInt(top_point.substring(0,top_len-2));
+			if(top_point_value<=0){
+				red_clock.style.top=top_point_value+"px";
+			}else{
+				red_clock.style.top=top_point_value-42+"px";
+			}	
+		}
+		// 向下移动
+		else if(angle==180){
+			var bottom_point=getStyle(red_clock,"top");
+	        var bottom_len=bottom_point.length;
+	        var bottom_point_value=parseInt(bottom_point.substring(0,bottom_len-2));
+			if(bottom_point_value>=378){
+				red_clock.style.top=bottom_point_value+"px";
+			}else{
+				red_clock.style.top=bottom_point_value+42+"px";
+			}	
+		}
+		// 向右移动
+		else if(angle==90){
+			var right_point=getStyle(red_clock,"left");
+	        var right_len=right_point.length;
+	        var right_point_value=parseInt(right_point.substring(0,right_len-2));
+			if(right_point_value>=378){
+				red_clock.style.left=right_point_value+"px";
+			}else{
+				red_clock.style.left=right_point_value+42+"px";
+			}	
+		}
+		// 向左移动
+		else if(angle==-90){
+			var left_point=getStyle(red_clock,"left");
+	        var left_len=left_point.length;
+	        var left_point_value=parseInt(left_point.substring(0,left_len-2));
+			if(left_point_value<=0){
+				red_clock.style.left=left_point_value+"px";
+			}else{
+				red_clock.style.left=left_point_value-42+"px";
+			}	
+		}
+	}
+    
+    // 初始化布局
+	function init(box){
+		var html="";
+		for(var i=0;i<10;i++){
+			for(var j=0;j<10;j++){
+                html=html+'<div id="cell-'+i+'-'+j+'" class="cell" ></div>';
+			}
+		}
+		html=html+'<div id="red-block">'
+		    	     +'<div class="blue"></div>'
+		    	     +'<div class="red"></div>'
+	               +'</div>';
+		box.innerHTML=html;
+        
+		for(var i=0;i<10;i++){
+			for(var j=0;j<10;j++){
+                var cell=document.getElementById('cell-'+i+'-'+j+'');
+                cell.style.left=j*42+'px';
+                cell.style.top=i*42+'px';
+
+                if(i==0){
+                	cell.style.borderTopColor="#fff";
+                }
+                if(i==9){
+                	cell.style.borderBottomColor="#fff";
+                }
+                if(j==0){
+                	cell.style.borderLeftColor="#fff";
+                }
+                if(j==9){
+                	cell.style.borderRightColor="#fff";
+                }
+			}
+		}
+	}
+
+	
+</script>
+</html>
