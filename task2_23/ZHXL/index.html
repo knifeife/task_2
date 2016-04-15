@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>二叉树</title>
+	<style type="text/css">
+	body{
+		text-align: center;
+	}
+	.tree{
+		padding: 10px;
+		margin-left: 10px;
+		background-color: #fff;
+	}
+	#box{
+		display: flex;
+		justify-content:space-between;
+		width: 1200px;
+		height: 100px;
+		margin: 40px auto;
+		border: 1px solid #000;
+	}
+	.box1{
+		display: inline-flex;
+		justify-content:space-between;
+		border: 1px solid #000;
+	}
+	.box2{
+		display: inline-flex;
+		justify-content:space-between;
+		border: 1px solid #000;
+	}
+	.box3{
+		display: inline-flex;
+		justify-content:space-between;
+		border: 1px solid #000;
+	}
+	</style>
+</head>
+<body>
+	<div class="tree" id="box">people
+		<div class="tree box1">man
+			<div class="tree box2">boy
+				<div class="tree box3">boy1</div>
+		        <div class="tree box3">boy2</div>
+		        <div class="tree box3">boy3</div>
+		        <div class="tree box3">boy4</div>
+			</div>
+		    <div class="tree box2">father
+		    	<div class="tree box3">f1</div>
+		        <div class="tree box3">f2</div>
+		    </div>
+		</div>
+		<div class="tree box1">woman
+			<div class="tree box2">girl
+				<div class="tree box3">g1</div>
+		        <div class="tree box3">g2</div>
+		        <div class="tree box3">g3</div>
+			</div>
+		    <div class="tree box2">mother
+		    	<div class="tree box3">m1</div>
+		        <div class="tree box3">m2</div>
+		    </div>
+		</div>
+		<div class="tree box1">children</div>
+	</div>
+	<button id="pre">前序遍历</button>
+	<button id="post">后序遍历</button>
+	时间间隔：<input type="text" value="1000">
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		var timer;
+		var root=document.getElementById("box");
+		// 按钮的点击事件
+		document.getElementById("pre").onclick=function(){
+			var list=[];
+			reset();
+			preOrder(root,list);
+			changeBackColor(list);
+		};
+
+		document.getElementById("post").onclick=function(){
+			var list=[];
+			reset();
+			postOrder(root,list);
+			changeBackColor(list);
+		};
+
+        // 遍历以及改变当前遍历到的元素的背景颜色
+		function changeBackColor(list){
+			var time=document.getElementsByTagName("input")[0].value;
+            var len=list.length;
+            var i=0;
+            list[i].style.backgroundColor="blue";
+            timer=setInterval(function(){
+            	i++;
+            	if(i<len){
+            		list[i-1].style.backgroundColor="#fff";
+            		list[i].style.backgroundColor="blue";
+            	}else{
+            		clearInterval(timer);
+            		list[i-1].style.backgroundColor="#fff";
+            	}
+            },time);
+		}
+
+		// 重置样式
+		function reset(){
+			clearInterval(timer);
+			var tree=getElementsByClass("tree");
+			for(var i=0;i<tree.length;i++){
+				tree[i].style.backgroundColor="#fff"
+			}
+		}
+
+		// 根据类名获取元素
+		function getElementsByClass(cls){
+			var els=document.getElementsByTagName("*");
+			var ret=[];
+			for(var i=0;i<els.length;i++){
+				if(els[i].className==cls
+					||els[i].className.indexOf(cls+" ")
+					||els[i].className.indexOf(" "+cls)
+					||els[i].className.indexOf(" "+cls+" "))
+				{
+					ret.push(els[i]);
+				}
+			}
+			return ret;
+		}
+
+		// 前序遍历
+		function preOrder(node,list){
+            if(node){
+            	list.push(node);
+            	for(var i=0,len=node.childNodes.length;i<len;i++){
+            		if(node.childNodes[i].nodeType==1){
+            			preOrder(node.childNodes[i],list);
+            		}
+            	}
+			}
+		}
+
+		// 后序遍历
+		function postOrder(node,list){
+			if(node){
+				for(var i=0,len=node.childNodes.length;i<len;i++){
+            		if(node.childNodes[i].nodeType==1){
+            			postOrder(node.childNodes[i],list);
+            		}
+            	}
+            	list.push(node);
+			}
+		}
+	}
+</script>
+</html>

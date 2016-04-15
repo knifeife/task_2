@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>二叉树</title>
+	<style type="text/css">
+	body{
+		text-align: center;
+	}
+	.tree{
+		padding: 10px;
+		margin-left: 10px;
+		background-color: #fff;
+	}
+	#box{
+		display: flex;
+		justify-content:space-between;
+		margin: 40px auto;
+		border: 1px solid #000;
+	}
+	.child{
+		display: inline-flex;
+		justify-content:space-between;
+		border: 1px solid #000;
+		cursor: pointer;
+	}
+	#operate{
+		margin-top: 30px;
+	}
+	#del{
+		margin: 20px;
+	}
+	</style>
+</head>
+<body>
+	<div class="tree" id="box">people
+		<div class="tree child">man
+			<div class="tree child">boy
+				<div class="tree child">boy1</div>
+		        <div class="tree child">boy2</div>
+		        <div class="tree child">boy3</div>
+		        <div class="tree child">boy4</div>
+			</div>
+		    <div class="tree child">father
+		    	<div class="tree child">f1</div>
+		        <div class="tree child">f2</div>
+		    </div>
+		</div>
+		<div class="tree child">woman
+			<div class="tree child">girl
+				<div class="tree child">g1</div>
+		        <div class="tree child">g2</div>
+		        <div class="tree child">g3</div>
+			</div>
+		    <div class="tree child">mother
+		    	<div class="tree child">m1</div>
+		        <div class="tree child">m2</div>
+		    </div>
+		</div>
+		<div class="tree child">children</div>
+	</div>
+	<div id="btns">
+		<button id="pre">前序遍历</button>
+		<button id="post">后序遍历</button>
+		时间间隔：<input type="text" value="1000" id="time">
+		<div id="operate">
+			<button id="del">删除</button><br>
+			增加内容：<input type="text" value="mom" id="content">
+			<button id="add">添加</button>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	window.onload=function(){
+		// 判断浏览器是否存在getElementsByClassName方法，若没有，则用js模拟
+		if(!document.getElementsByClassName){
+			document.getElementsByClassName=function(cls){
+	            var ret=[];
+	            var els=document.getElementsByTagName("*");
+
+	            for(var i=0,len=els.length;i<len;i++){
+	            	if(els[i].className===cls||els[i].className.indexOf(cls)+1){
+	            		ret.push(els[i]);
+	            	}
+	            }
+	            return ret;
+			};
+		}
+
+		var timer;
+		var root=document.getElementById("box");
+		var btns=document.getElementById("btns");
+
+		// 在id="box"的元素上进行点击事件事件的委托
+		root.onclick=function(event){
+			var e=event||window.event;
+			var target=e.target||e.srcElement;    
+			changeStyle(target);
+		}
+
+		// 按钮点击事件的委托
+		btns.onclick=function(event){
+			var e=event||window.event;
+			var target=e.target||e.srcElement;
+            switch(target.id){
+            	case "pre":
+            	    var list=[];
+					reset();
+					preOrder(root,list);
+					changeBackColor(list);
+					break;
+				case "post":
+            	    var list=[];
+					reset();
+					postOrder(root,list);
+					changeBackColor(list);
+					break;
+				case "del":
+				    reset();
+            	    delNodes();
+					break;
+				case "add":
+				    reset();
+            	    addNodes();
+					break;
+			    default:
+			        break;
+			}
+		}
+
+		// 选中元素显示特殊样式
+		function changeStyle(node){
+			reset();
+			if (node.style.backgroundColor!="blue") {
+            	node.style.backgroundColor="blue";
+            	addClass(node,"checked");
+            } else{
+            	node.style.backgroundColor="#fff";
+            	removeClass(node,"checked");
+            };
+		}
+
+        // 增加类名
+        function addClass(element,cls){
+            var aClass=element.className+" "+cls;
+            element.className=aClass;
+        }
+        // 删除类名
+        function removeClass(element,cls){
+        	var rClass=element.className;
+        	element.className=rClass.replace(cls,"");
+        }
+        // 删除选中的节点
+        function delNodes(){
+        	var elements=document.getElementsByClassName("checked");
+			for(var i=0;i<elements.length;i++){
+				elements[i].parentNode.removeChild(elements[i]);
+				i--;
+			}
+        }
+        // 为选中的节点增加子节点
+        function addNodes(){
+        	var elements=document.getElementsByClassName("checked");
+			for(var i=0;i<elements.length;i++){
+				var newElement=document.createElement("div");
+			    newElement.className="tree box1";
+			    newElement.innerHTML=document.getElementById("content").value;
+				elements[i].appendChild(newElement);
+			}
+        }
+        // 遍历以及改变当前遍历到的元素的背景颜色
+		function changeBackColor(list){
+			var time=document.getElementsByTagName("input")[0].value;
+            var len=list.length;
+            var i=0;
+            list[i].style.backgroundColor="blue";
+            timer=setInterval(function(){
+            	i++;
+            	if(i<len){
+            		list[i-1].style.backgroundColor="#fff";
+            		list[i].style.backgroundColor="blue";
+            	}else{
+            		clearInterval(timer);
+            		list[i-1].style.backgroundColor="#fff";
+            	}
+            },time);
+		}
+
+		// 重置样式
+		function reset(){
+			clearInterval(timer);
+			var tree=document.getElementsByClassName("tree");
+			for(var i=0;i<tree.length;i++){
+				tree[i].style.backgroundColor="#fff"
+			}
+		}
+
+		// 前序遍历
+		function preOrder(node,list){
+            if(node){
+            	list.push(node);
+            	for(var i=0,len=node.children.length;i<len;i++){
+            			preOrder(node.children[i],list);
+            	}
+			}
+		}
+
+		// 后序遍历
+		function postOrder(node,list){
+			if(node){
+				for(var i=0,len=node.children.length;i<len;i++){
+            			postOrder(node.children[i],list);
+            	}
+            	list.push(node);
+			}
+		}
+	}
+</script>
+</html>

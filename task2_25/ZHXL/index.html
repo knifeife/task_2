@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>树形组件</title>
+	<link rel="stylesheet" type="text/css" href="tree.css">
+</head>
+<body>
+	<div class="box">
+	    <div id="search">
+	    	<input type="text" placeholder="搜索关键字" name="search">
+	    	<button class="search">搜索</button>
+	    </div>
+		<div id="tree">
+			<ul class="tree">
+				<li id="root">
+					<div class="title"><span class="fold"></span><span class="t-text">目录</span>
+					    <div class="btns">
+					    	<span class="add">增加</span>
+					    	<span class="refresh">重命名</span>
+					    </div>
+					</div>
+					<ul class="tree">
+						<li>
+							<div class="title">
+							    <span class="fold"></span>
+							    <span class="t-text">前端</span>
+							    <div class="btns">
+							    	<span class="add">增加</span>
+							    	<span class="del">删除</span>
+							    	<span class="refresh">重命名</span>
+							    </div>
+							</div>
+							<ul class="tree">
+								<li>
+									<div class="title"><span class="fold"></span><span class="t-text">HTML</span>
+									    <div class="btns">
+									    	<span class="add">增加</span>
+									    	<span class="del">删除</span>
+									    	<span class="refresh">重命名</span>
+									    </div>
+									</div>
+									<ul class="tree">
+										<li>
+										    <div class="title"><span class="fold"></span><span class="t-text">HTML5</span>
+											    <div class="btns">
+											    	<span class="add">增加</span>
+											    	<span class="del">删除</span>
+											    	<span class="refresh">重命名</span>
+											    </div>
+										    </div>
+										    <ul class="tree">
+												<li>
+													<div class="title">
+													    <span class="fold"></span>
+													    <span class="t-text">canvas</span>
+													    <div class="btns">
+													    	<span class="add">增加</span>
+													    	<span class="del">删除</span>
+													    	<span class="refresh">重命名</span>
+													    </div>
+													</div>
+												</li>
+												<li>
+													<div class="title">
+													    <span class="fold"></span>
+													    <span class="t-text">transform</span>
+													    <div class="btns">
+													    	<span class="add">增加</span>
+													    	<span class="del">删除</span>
+													    	<span class="refresh">重命名</span>
+													    </div>
+													</div>
+												</li>
+												<li>
+													<div class="title">
+													    <span class="fold"></span>
+													    <span class="t-text">amnimotion</span>
+													    <div class="btns">
+													    	<span class="add">增加</span>
+													    	<span class="del">删除</span>
+													    	<span class="refresh">重命名</span>
+													    </div>
+													</div>
+												</li>
+											</ul>
+										</li>
+										<li>
+											<div class="title">
+											    <span class="fold"></span>
+											    <span class="t-text">XML</span>
+											    <div class="btns">
+											    	<span class="add">增加</span>
+											    	<span class="del">删除</span>
+											    	<span class="refresh">重命名</span>
+											    </div>
+											</div>
+										</li>
+										<li>
+											<div class="title">
+											    <span class="fold"></span>
+											    <span class="t-text">XHTML</span>
+											    <div class="btns">
+											    	<span class="add">增加</span>
+											    	<span class="del">删除</span>
+											    	<span class="refresh">重命名</span>
+											    </div>
+											</div>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<div class="title">
+									    <span class="fold"></span>
+									    <span class="t-text">CSS</span>
+									    <div class="btns">
+									    	<span class="add">增加</span>
+									    	<span class="del">删除</span>
+									    	<span class="refresh">重命名</span>
+									    </div>
+									</div>
+									<ul class="tree">
+										<li>
+											<div class="title">
+											    <span class="fold"></span>
+											    <span class="t-text">css3</span>
+											    <div class="btns">
+											    	<span class="add">增加</span>
+											    	<span class="del">删除</span>
+											    	<span class="refresh">重命名</span>
+											    </div>
+											</div>
+										</li>
+									</ul>
+								</li>
+								<li>
+									<div class="title">
+									    <span class="fold"></span>
+									    <span class="t-text">javascript</span>
+									    <div class="btns">
+									    	<span class="add">增加</span>
+									    	<span class="del">删除</span>
+									    	<span class="refresh">重命名</span>
+									    </div>
+									</div>
+									<ul class="tree">
+										<li>
+											<div class="title">
+											    <span class="fold"></span>
+											    <span class="t-text">jquery</span>
+											    <div class="btns">
+											    	<span class="add">增加</span>
+											    	<span class="del">删除</span>
+											    	<span class="refresh">重命名</span>
+											    </div>
+											</div>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	</div>
+</body>
+<script type="text/javascript" src="tree.js"></script>
+</html>
